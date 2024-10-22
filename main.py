@@ -2,16 +2,15 @@ import asyncio
 import nodriver as uc
 import json
 
-login_email = ""
-login_pwd = ""
+login_email = "joejames8123@gmail.com"
+login_pwd = "qwer1234QWER!@#$"
 async def main():
     option = read_option('option.json')
     
     section = option['seats']['section']
     row = option['seats']['row']
-    
 
-    browser = await uc.start()
+    browser = await uc.start( )
     page = await browser.get('https://auth.ticketmaster.com/as/authorization.oauth2?client_id=8bf7204a7e97.web.ticketmaster.us&response_type=code&scope=openid%20profile%20phone%20email%20tm&redirect_uri=https://identity.ticketmaster.com/exchange&visualPresets=tm&lang=en-us&placementId=mytmlogin&hideLeftPanel=false&integratorId=prd1741.iccp&intSiteToken=tm-us&deviceId=tQSfkNxoUcHHwbnHwMfDxsDGwcej32q9bpwWCQ&doNotTrack=false')
     await page.wait(10)
     await page.get_content()
@@ -41,8 +40,10 @@ async def main():
     await page.get(option['url'])
     await page.reload()
     await page.get_content()
-
-    await page.wait_for(".quick-picks-container", timeout=100)
+    try:
+        await page.wait_for(".quick-picks-container", timeout=100)
+    except:
+         pass
     print ("Now, purchase was prepared.")
 
     await page.wait_for('.sc-stoanl-6', timeout=100)
